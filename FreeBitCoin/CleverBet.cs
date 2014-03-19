@@ -45,6 +45,7 @@ namespace FreeBitCoin
 
         int period = 0;
         String betHiorLo = "hi";
+        String cookie = "";
 
         CodeEvaler codeEvaler;
 
@@ -58,12 +59,14 @@ namespace FreeBitCoin
             }
         }
 
-        public bool Setup(int _multiplier, double _loss_margin, double _win_margin, double _percent_bet, BettingSystem _bettingSystem, double _stake, bool _slowMode, double _dryRunAmount)
+        public bool Setup(string _cookie, int _multiplier, double _loss_margin, double _win_margin, double _percent_bet, BettingSystem _bettingSystem, double _stake, bool _slowMode, double _dryRunAmount)
         {
             dryRun = _dryRunAmount > 0;
 
             multiplier = _multiplier < min_multiplier ? min_multiplier : _multiplier;
             multiplier = _multiplier > max_multiplier ? max_multiplier : _multiplier;
+
+            cookie = _cookie;
 
             if (dryRun)
             {
@@ -306,6 +309,11 @@ namespace FreeBitCoin
         public String GetBetHighOrLow()
         {
             return betHiorLo;
+        }
+
+        public string GetCookie()
+        {
+            return cookie;
         }
 
         public string GetStakeFormatted()

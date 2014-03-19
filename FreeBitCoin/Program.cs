@@ -15,6 +15,7 @@ namespace FreeBitCoin
             double stake = 0;
             bool slowMode = false;
             double dryRunAmount = 0;
+            string cookie = "";
             BettingSystem bettingSystem = BettingSystem.Martingale;
 
             try
@@ -59,14 +60,18 @@ namespace FreeBitCoin
                                 if (i < args.Length - 1 && args[i + 1] != null)
                                     dryRunAmount = double.Parse(args[i + 1]);
                                 break;
+                            case "-c":
+                                if (i < args.Length - 1 && args[i + 1] != null)
+                                    cookie = args[i + 1];
+                                break;
                             case "-h":
-                                Console.WriteLine("Use the following options:\n -x Number [2]\t\tSet the game's odds and payout multiplier, from 2 to 100.\n -l Number [70]\t\tPercent of starting amount least to reach (loss).\n -w Number [30]\t\tPercent of profit most to reach (win).\n -b Number [0]  or min\tSet the game's minimum bet. Use 'min' for 0.00000001 BTC. (Overrides any percent bet, -p).\n -p Number [1]\t\tSet the game's minimum bet based on percentage of total money.\n -m Number [1]\t\tSet the game's betting strategy. Use 1 For Martingale, 2 for Anti-Martingale, 3 for Fixed bet or 4 for Minimal bet.\n -d Number [0]\t\tSimulate the game (dry run).\n -s      \t\tGo slowly, confirming each bet.\n -h      \t\tShow this help.");
+                                Console.WriteLine("Use the following options:\n -c \"cookie\" [none]\t\tSet the cookie that needs to be used. Use double quotes to wrap the entire string and seperate values with a semicolon.\n -l Number   [70]\t\tPercent of starting amount least to reach (loss).\n -w Number   [30]\t\tPercent of profit most to reach (win).\n -b Number   [0]  or min\tSet the game's minimum bet. Use 'min' for 0.00000001 BTC. (Overrides any percent bet, -p).\n -p Number   [1]\t\tSet the game's minimum bet based on percentage of total money.\n -m Number   [1]\t\tSet the game's betting strategy. Use 1 For Martingale, 2 for Anti-Martingale, 3 for Fixed bet or 4 for Minimal bet.\n -d Number   [0]\t\tSimulate the game (dry run).\n -s      \t\t\tGo slowly, confirming each bet.\n -h      \t\t\tShow this help.");
                                 return;
                         }
                     }
                 }
 
-                if (!CleverBet.Instance.Setup(multiplier, loss_margin, win_margin, percent_bet, bettingSystem, stake, slowMode, dryRunAmount))
+                if (!CleverBet.Instance.Setup(cookie, multiplier, loss_margin, win_margin, percent_bet, bettingSystem, stake, slowMode, dryRunAmount))
                     return;
 
                 Console.WriteLine();
